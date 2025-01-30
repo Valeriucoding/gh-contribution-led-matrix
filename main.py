@@ -4,7 +4,7 @@ import board
 import displayio
 import framebufferio
 import rgbmatrix
-import adafruit_display_text.label
+from adafruit_display_text.label import Label
 from adafruit_bitmap_font import bitmap_font
 
 url = "https://api.github.com/graphql"
@@ -118,17 +118,25 @@ else:
 
     FONT = bitmap_font.load_font("5x5FontMonospaced-5.bdf")
 
+    colors = [
+        0xFF5733,
+        0x33FF57,
+        0x3357FF,
+        0xFFD700,
+    ]
+
     stats_labels = [
         f"TC: {total_contributions}",
         f"Avg: {avg_per_day:.1f}",
         f"CS: {current_streak}",
         f"LS: {longest_streak}",
     ]
+
     for i, label_text in enumerate(stats_labels):
-        line = adafruit_display_text.label.Label(
+        line = Label(
             FONT,
             text=label_text,
-            color=0xFFFFFF,
+            color=colors[i % len(colors)],
         )
         line.x = 0
         line.y = 11 + i * 6
